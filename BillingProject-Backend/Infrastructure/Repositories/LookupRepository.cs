@@ -32,7 +32,9 @@ namespace BillingProject_Backend.Infrastructure.Repositories
                 {
                     Id = rdr.GetInt32(0),
                     RazonSocial = rdr.GetString(1),
-                    TipoCliente = rdr.GetString(2)
+                    TipoCliente = rdr.GetString(2),
+                    FechaCreacion = rdr.GetDateTime(3),
+                    RFC = rdr.GetString(4)
                 });
             }
 
@@ -58,6 +60,8 @@ namespace BillingProject_Backend.Infrastructure.Repositories
                     Id = rdr.GetInt32(0),
                     NombreProducto = rdr.GetString(1),
                     PrecioUnitario = rdr.GetDecimal(2),
+                    imagenProducto = rdr.GetString(3),
+                    ext = rdr.GetDecimal(4)
                 });
             }
             return result;
