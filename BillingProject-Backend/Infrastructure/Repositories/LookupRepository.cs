@@ -1,7 +1,8 @@
-﻿using System.Data;
-using System.Data.SqlClient;
-using BillingProject_Backend.Domain.DTOs;
+﻿using BillingProject_Backend.Domain.DTOs;
 using BillingProject_Backend.Infrastructure.Database;
+using System.Data;
+using System.Data.SqlClient;
+using System.Reflection.PortableExecutable;
 
 namespace BillingProject_Backend.Infrastructure.Repositories
 {
@@ -55,13 +56,18 @@ namespace BillingProject_Backend.Infrastructure.Repositories
 
             while (await rdr.ReadAsync())
             {
+                var temp = result;
                 result.Add(new ProductoDTO
                 {
                     Id = rdr.GetInt32(0),
                     NombreProducto = rdr.GetString(1),
-                    PrecioUnitario = rdr.GetDecimal(2),
-                    imagenProducto = rdr.GetString(3),
-                    ext = rdr.GetDecimal(4)
+                    //imagenProducto = rdr.IsDBNull(2)
+                    //    ? Array.Empty<byte>()
+                    //    : (byte[])rdr[2],
+                    //PrecioUnitario = rdr.GetDecimal(3),
+                    ext = rdr.IsDBNull(2) ? "" : rdr.GetString(2),
+                    imagenProducto = rdr.IsDBNull(3) ? "" : rdr.GetString(3),
+                    PrecioUnitario = rdr.IsDBNull(4) ? 0 : rdr.GetInt32(4)
                 });
             }
             return result;
